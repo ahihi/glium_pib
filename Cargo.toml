@@ -1,6 +1,6 @@
 [package]
 name = "glium_pib"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["frede <frederik.glasmachers@tu-dortmund.de>"]
 license = "MIT"
 keywords = ["opengl", "glium", "rpi", "raspberrypi", "videocore"]
@@ -16,7 +16,7 @@ repository = "https://github.com/pentagolo/glium_pib"
 exclude = [".travis.yml"]
 
 [dependencies]
-glium = "0.14.0"
-shared_library = "0.1.4"
-libc = "0.2.10"
+glium = "0.20"
+shared_library = "0.1"
+libc = "0.2"
 

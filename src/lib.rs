@@ -108,7 +108,7 @@ fn main() {
 */
 
 #[macro_use] extern crate shared_library;
-#[macro_use] extern crate glium;
+extern crate glium;
 extern crate libc;
 
 mod ffi;
@@ -428,8 +428,11 @@ unsafe impl<S> glium::backend::Backend for Window<S> where S: Deref<Target=Syste
     }
 }
 /// Creates a new glium facade.
-pub fn create_window_facade(system: &Arc<System>, config: &WindowConfig) -> Result<Rc<glium::backend::Context>, glium::GliumCreationError<Error>> {
-    let window = Rc::new(try!(Window::new(system.clone(), config).map_err(|e| { glium::GliumCreationError::BackendCreationError(e) })));
-    unsafe { glium::backend::Context::new::<Rc<Window<Arc<System>>>, Error>(window, true, Default::default()) }
+pub fn create_window_facade(system: &Arc<System>, config: &WindowConfig) -> Result<Rc<glium::backend::Context>, Error> {
+    let window = Rc::new(try!(Window::new(system.clone(), config)));
+    unsafe {
+        glium::backend::Context::new::<Rc<Window<Arc<System>>>>(window, true, Default::default())
+            .map_err(Error::IncompatibleGl)
+    }
 }
 

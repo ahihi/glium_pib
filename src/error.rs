@@ -1,3 +1,4 @@
+use glium;
 use shared_library;
 
 use ffi;
@@ -5,6 +6,7 @@ use ffi;
 /// Possible errors.
 #[derive(Debug)]
 pub enum Error {
+    IncompatibleGl(glium::IncompatibleOpenGl),
     /// Open-GL error with the name of the function which caused the error and the error code returned by glGetError().
     Gl(&'static str, ffi::GLenum),
     /// Is used when the return value of a function call indicates an error.
