@@ -52,14 +52,17 @@ fn main() {
 
     // The raspberry pi has only basic GLSL support.
     let vertex_shader_src = r#"
+        #version 100
         attribute vec2 position;
         void main() {
             gl_Position = vec4(position, 0.0, 1.0);
         }
     "#;
     let fragment_shader_src = r#"
+        #version 100
+        uniform vec3 fill_color;
         void main() {
-            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+            gl_FragColor = vec4(fill_color, 1.0);
         }
     "#;
     let program = glium::Program::from_source(
@@ -82,7 +85,9 @@ fn main() {
             &vertex_buffer,
             &indices,
             &program,
-            &glium::uniforms::EmptyUniforms,
+            &uniform! {
+                fill_color: [1.0f32, 0.0f32, 0.0f32]
+            },
             &Default::default()
         ).unwrap();
         target.finish().unwrap();
